@@ -2,12 +2,11 @@
 const readline = require('readline-sync');
 //declare un array vacio ya que este se ira llenando o vaciando dependiendo de la accion que se decida realizar
 let listaDeTrareas = [];
-//agregue la funcion de agregar una tarea con parametros de indicador y descripcion. para luego mandar la info al array vacio
 const http = require('http');
 const host = 'localhost';
 const port = 9000;
 const serverNew = function (req, res) {
-    const url = new URL(req.url, 'http://localhost:8080/');
+    const url = new URL(req.url, 'http://localhost:9000/');
     res.writeHead({ 'Content-Type': 'text/plain' });
     res.end();
 }
@@ -16,6 +15,7 @@ server.listen(port, host, () => {
     console.log('Servidor en linea');
 });
 
+//agregue la funcion de agregar una tarea con parametros de indicador y descripcion. para luego mandar la info al array vacio
 function agregarTarea(indicador, descripcion) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
