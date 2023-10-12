@@ -2,9 +2,6 @@
 const readline = require('readline-sync');
 //declare un array vacio ya que este se ira llenando o vaciando dependiendo de la accion que se decida realizar
 let listaDeTrareas = [];
-const http = require('http');
-const host = 'localhost';
-const port = 9000;
 const serverNew = function (req, res) {
     const url = new URL(req.url, 'http://localhost:9000/');
     res.writeHead({ 'Content-Type': 'text/plain' });
