@@ -1,17 +1,26 @@
-//declaro el readline que me ayudara mas adelante para que el usuario pueda interactuar con el programa
-const readline = require('readline-sync');
-//declare un array vacio ya que este se ira llenando o vaciando dependiendo de la accion que se decida realizar
-let listaDeTrareas = [];
-const serverNew = function (req, res) {
-    const url = new URL(req.url, 'http://localhost:9000/');
-    res.writeHead({ 'Content-Type': 'text/plain' });
-    res.end();
-}
-const server = http.createServer(serverNew);
-server.listen(port, host, () => {
-    console.log('Servidor en linea');
-});
 
+const express = require('express');
+const app = express();
+const port = 8000;
+
+const listViewRouter = require('./list-view-router');
+const listEditRouter = require('./list-edit-router');
+
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use('/listView', listViewRouter);
+app.use('/listEdit', listEditRouter);
+
+app.listen(port, () => {
+    console.log(`servidor corriendo en http://localhost: ${port}`);
+});
+const readline = require('readline-sync');
+const listaDeTareas = [
+    { indicador: 2, descripcion: "blablabla", completada: false },
+    { indicador: 3, descripcion: "wgweew", completada: true }
+];
 //agregue la funcion de agregar una tarea con parametros de indicador y descripcion. para luego mandar la info al array vacio
 function agregarTarea(indicador, descripcion) {
     return new Promise((resolve, reject) => {
@@ -40,11 +49,11 @@ function eliminarTarea(indicador) {
     //use el find para encontrar en el array una tarea que cumpla con la condicion 
    
 };
-//agregue la funcion de completar una tarea
+// agregue la funcion de completar una tarea
 function tareaCompletada(indicador) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-    const tarea = listaDeTrareas.find(tarea => tarea.indicador === indicador);
+    const tarea = listaDeTareas.find(tarea => tarea.indicador === indicador);
     if (tarea) {
         tarea.completada = true;
        resolve(console.log('La tarea ' + indicador + ' a sido completada: '));
@@ -53,13 +62,13 @@ function tareaCompletada(indicador) {
     } 
         }, 3000);
     });
-    //aca busco la tarea que deseo completar
+    // aca busco la tarea que deseo completar
    
 };
 //agregue un funcion que me permite ver las tareas que he agregado en el array
 function mostrarTareas() {
     console.log('lista de tareas');
-    listaDeTrareas.forEach((tarea) => {
+    listaDeTareas.forEach((tarea) => {
         const estado = tarea.completada ? 'Completada' : 'Pendiente'
         console.log(+tarea.indicador + ' - ' + tarea.descripcion + ' - ' + estado);
     });
@@ -117,4 +126,4 @@ async function menu() {
     } 
 //llame la funcion menu para poder veer el menu 
 menu();
-
+module.exports(listaDeTareas, indicador, descripcion, completada);
