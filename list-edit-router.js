@@ -10,6 +10,7 @@ listEditRouter.post('/agregar', (req, res) => {
            listaDeTareas.push(newTask);
            res.status(200).json(newTask)
        }
+       res.end()
 });
 
 listEditRouter.delete('/delete', (req, res) => {
@@ -20,6 +21,7 @@ listEditRouter.delete('/delete', (req, res) => {
     } else {
         res.status(400).json(Error, `la tarea con indicador ${indicador} no fue encontrada`);
     }
+    res.end()
 })
 listEditRouter.put('/actualizar/:id', (req, res) => {
     const tareaId = parseInt(req.params.id);
@@ -31,5 +33,6 @@ listEditRouter.put('/actualizar/:id', (req, res) => {
     } else {
         res.status(404).json({ mensaje: 'Tarea no encontrada' });
     }
+    res.end()
 });
 module.exports = listEditRouter;

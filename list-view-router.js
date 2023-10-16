@@ -6,6 +6,7 @@ listViewRouter.get('/completeTask', (req, res) => {
         (tarea) => tarea.estado === true
     );
     res.json(taskComplete);
+    res.end()
 });
 listViewRouter.get('/incompleteTask', (req, res) => {
     const {listaDeTrareas} = require("./listaTareas")
@@ -13,6 +14,6 @@ listViewRouter.get('/incompleteTask', (req, res) => {
         (tarea) => tarea.estado === false
     );
     res.json(taskIncomplete);
+    res.end()
 });
-
 module.exports = listViewRouter;

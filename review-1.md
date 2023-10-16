@@ -7,4 +7,5 @@ la funcionalidades mas importantes son:
 un indicador que es el numero de la tarea o como quiere nombrarla la persona, 
 una descripcion, donde se escribe que se tiene que hacer y por ultimo un estado donde indica si ya hicimos la tarea o no. 
 Tambien en esta lista de tareas podremos agregar la cantidadde tareas que queramos y tambien borrarlas. ademas de ver cuantas tareas tenemos en total, visualizando su indicador, descripcion y estado. 
-los usuarios la usarian ya que es una lista de tareas facil de entender y completa  
+los usuarios la usarian ya que es una lista de tareas facil de entender y completa 
+ademas de eso se le agragaron recientemente nuevas funcionalidades que le permite agregar, borrar, actualizary ver la lista de tareas en diferentes ventanas o pestañas. 

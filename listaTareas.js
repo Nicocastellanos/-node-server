@@ -16,6 +16,10 @@ app.use('/listEdit', listEditRouter);
 app.listen(port, () => {
     console.log(`servidor corriendo en http://localhost: ${port}`);
 });
+app.get('/', (req,res)=>{
+    res.write('Servidor funcionando')
+    res.end()
+});
 const readline = require('readline-sync');
 const listaDeTareas = [
     { indicador: 2, descripcion: "blablabla", completada: false },
@@ -25,7 +29,7 @@ const listaDeTareas = [
 function agregarTarea(indicador, descripcion) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            listaDeTrareas.push({
+            listaDeTareas.push({
             indicador, descripcion, completada: false});
             console.log('tarea agregada: ' + indicador + ' - ' + descripcion);
             resolve();
@@ -37,7 +41,7 @@ function agregarTarea(indicador, descripcion) {
 function eliminarTarea(indicador) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-    const findTarea = listaDeTrareas.findIndex(tarea => tarea.indicador === indicador);
+    const findTarea = listaDeTareas.findIndex(tarea => tarea.indicador === indicador);
     if (findTarea !== -1) {
         listaDeTrareas.splice(findTarea, 1);
        resolve(console.log('Tarea eliminada ' + indicador));
@@ -126,4 +130,4 @@ async function menu() {
     } 
 //llame la funcion menu para poder veer el menu 
 menu();
-module.exports(listaDeTareas, indicador, descripcion, completada);
+
