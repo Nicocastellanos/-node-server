@@ -1,7 +1,44 @@
 const express = require('express');
 const listEditRouter = express.Router();
 
-listEditRouter.post('/agregar', (req, res) => {
+//middleware para solicitudes vacias
+const postVacio =(req,res,next)=>{
+    if (req.method === "POST"  && (!req.body || Object.keys(req.body).length === 0)){
+        res.status(400).json({
+            error : 'faltan parametros en la solicitud'}) 
+        } else{
+        next();
+    }
+}
+
+//middleware solicitudes POST que tengan información no valida o atributos faltantes para crear las tareas
+const postInvalid = (req,res,next)=>{
+    const {indicador,descripcion} = req.body;
+    if (!indicador || !descripcion) {
+        res.status(400).json({erro: 'se pusieron valores incorrectos o invalidos'})
+    } else{
+        next();
+    }
+};
+
+const putVacio = (req,res,next)=>{
+    if (req.method === 'PUT' && (!req.body || Object.keys(req.bbody).length === 0)) {
+        res.status(400).json({error: 'Solicitud vacia'})
+    } else {
+        next();
+    }
+};
+
+const putInvalid = (req, res,next)=>{
+    const {indicador,descripcion} = req.body;
+    if (!indicador, !descripcion) {
+        res.status(400).json({error: 'Valores incorrectos'})
+    }else{
+        next();
+    }
+}
+ 
+listEditRouter.post('/agregar', postInvalid, postVacio,(req, res) => {
     const {Tareas} = require("./principal");
     const { indicador, descripcion } = req.body;
     if (!indicador, descripcion){
@@ -25,7 +62,7 @@ listEditRouter.delete('/delete', (req, res) => {
         res.status(400).json({ error: `La tarea con indicador ${indicador} no fue encontrada` });
     }
 });
-listEditRouter.put('/actualizar/:indicador', (req, res) => {
+listEditRouter.put('/actualizar/:indicador', putVacio, (req, res) => {
     const {Tareas} = require("./principal");
     const {indicador} = req.params;
     const {newDescripcion} = req.body;
