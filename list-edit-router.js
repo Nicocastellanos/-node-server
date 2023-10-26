@@ -22,7 +22,7 @@ const postInvalid = (req,res,next)=>{
 };
 
 const putVacio = (req,res,next)=>{
-    if (req.method === 'PUT' && (!req.body || Object.keys(req.bbody).length === 0)) {
+    if (req.method === 'PUT' && (!req.body || Object.keys(req.body).length === 0)) {
         res.status(400).json({error: 'Solicitud vacia'})
     } else {
         next();
@@ -30,13 +30,13 @@ const putVacio = (req,res,next)=>{
 };
 
 const putInvalid = (req, res,next)=>{
-    const {indicador,descripcion} = req.body;
-    if (!indicador, !descripcion) {
+    const {newDescripcion} = req.body;
+    if (!newDescripcion) {
         res.status(400).json({error: 'Valores incorrectos'})
     }else{
         next();
     }
-}
+};
  
 listEditRouter.post('/agregar', postInvalid, postVacio,(req, res) => {
     const {Tareas} = require("./principal");
