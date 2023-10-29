@@ -39,7 +39,7 @@ const putInvalid = (req, res,next)=>{
 };
  
 listEditRouter.post('/agregar', postInvalid, postVacio,(req, res) => {
-    const {Tareas} = require("./principal");
+    const {Tareas} = require("../principal");
     const { indicador, descripcion } = req.body;
     if (!indicador, descripcion){
         const newTask = { indicador, descripcion, completado: false };
@@ -52,7 +52,7 @@ listEditRouter.post('/agregar', postInvalid, postVacio,(req, res) => {
 });
 
 listEditRouter.delete('/delete', (req, res) => {
-    const {Tareas} = require("./principal");
+    const {Tareas} = require("../principal");
     const { indicador } = req.body;
     const findTarea = Tareas.findIndex(tarea => tarea.indicador === indicador);
     if (findTarea !== -1) {
@@ -63,7 +63,7 @@ listEditRouter.delete('/delete', (req, res) => {
     }
 });
 listEditRouter.put('/actualizar/:indicador', putVacio, (req, res) => {
-    const {Tareas} = require("./principal");
+    const {Tareas} = require("../principal");
     const {indicador} = req.params;
     const {newDescripcion} = req.body;
     const tareaIndex = Tareas.findIndex(tarea => tarea.indicador === indicador);

@@ -4,7 +4,7 @@ const listViewRouter = express.Router();
 
 
 listViewRouter.get('/completeTask', (req, res) => {
-    const {Tareas} = require("./principal");
+    const {Tareas} = require("../src/principal");
      const taskComplete = Tareas.filter(
         (tarea) => tarea.completada === true
     );
@@ -12,7 +12,7 @@ listViewRouter.get('/completeTask', (req, res) => {
 });
 
      listViewRouter.get('/incompleteTask', (req, res) => {
-        const {Tareas} = require("./principal");
+        const {Tareas} = require("../src/principal");
      const taskIncomplete = Tareas.filter(
              (tarea) => tarea.completada === false
         );
