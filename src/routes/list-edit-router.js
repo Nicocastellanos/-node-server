@@ -15,7 +15,7 @@ const postVacio =(req,res,next)=>{
 const postInvalid = (req,res,next)=>{
     const {indicador,descripcion} = req.body;
     if (!indicador || !descripcion) {
-        res.status(400).json({erro: 'se pusieron valores incorrectos o invalidos'})
+        res.status(400).json({error: 'se pusieron valores incorrectos o invalidos'})
     } else{
         next();
     }
@@ -29,6 +29,7 @@ const putVacio = (req,res,next)=>{
     }
 };
 
+//middleware para put invalido
 const putInvalid = (req, res,next)=>{
     const {newDescripcion} = req.body;
     if (!newDescripcion) {
@@ -37,36 +38,60 @@ const putInvalid = (req, res,next)=>{
         next();
     }
 };
- 
+
+listEditRouter.get('/tasks', (req,res)=>{
+    const {tareas} = require ("../principal")
+    res.json(tareas);
+    res.end();
+})
+
+//endpoint para ver una sola tarea
+listEditRouter.get('/task/:indicador', (req,res)=>{
+    const {tareas} = require("../principal.js")
+    const {indicador} = req.params.indicador;
+    const indexTarea = tareas.find((tarea) => tarea.indicador === indicador)
+    if (!indexTarea) {
+        res.status(401).json({msg : `tarea con el indicador "${indicador}" no encontrada`})
+    } else{
+        res.status(201).json(indexTarea);
+    }
+})
+
+//endpoint para agregar tarea
 listEditRouter.post('/agregar', postInvalid, postVacio,(req, res) => {
-    const {Tareas} = require("../principal");
+    const {tareas} = require("../principal.js");
     const { indicador, descripcion } = req.body;
-    if (!indicador, descripcion){
-        const newTask = { indicador, descripcion, completado: false };
-        Tareas.push(newTask);
-        res.status(200).json(newTask);
-    } else {
-                res.status(400).json({error: "Faltan elementos para poder crear la tarea"})
+    const sameIndicador = tareas.find(tarea => tarea.indicador === indicador);
 
+    if(sameIndicador){
+        res.status(400).json({ error: `Ya existe una tarea con el indicador ${indicador}`})
+    }else{
+        const newTarea = { indicador , descripcion, completed: false};
+        tareas.push(newTarea);
+        res.status(201).json(newTarea);
     }
 });
 
-listEditRouter.delete('/delete', (req, res) => {
-    const {Tareas} = require("../principal");
-    const { indicador } = req.body;
-    const findTarea = Tareas.findIndex(tarea => tarea.indicador === indicador);
-    if (findTarea !== -1) {
-        Tareas.splice(findTarea, 1);
-        res.status(200).json({ mensaje: "Tarea eliminada" });
+//endpoint para borrar tarea
+listEditRouter.delete('/delete/:indicador', (req, res) => {
+    const {tareas} = require("../principal.js");
+    const { indicador } = req.params;
+    const findTarea = tareas.findIndex(tarea => tarea.indicador === indicador);
+
+    if (findTarea!== 1) {
+     tareas.splice(tareas,1)
+     res.status(200).json({ msg : `tarea con el indicador ${indicador} fue eliminada`})
     } else {
-        res.status(400).json({ error: `La tarea con indicador ${indicador} no fue encontrada` });
+       res.status(404).json({msg: `tarea con el indicador ${indicador} no fue encontrada`})
     }
 });
-listEditRouter.put('/actualizar/:indicador', putVacio, (req, res) => {
-    const {Tareas} = require("../principal");
+//endpoint para actualizar una tarea
+listEditRouter.put('/actualizar/:indicador', putVacio, putInvalid, (req, res) => {
+    const {tareas} = require("../principal.js");
     const {indicador} = req.params;
     const {newDescripcion} = req.body;
-    const tareaIndex = Tareas.findIndex(tarea => tarea.indicador === indicador);
+    const tareaIndex = tareas.findIndex(tarea => tarea.indicador === indicador);
+
     if (tareaIndex) {
         tareaIndex.descripcion = newDescripcion;
         res.json({ mensaje: 'Tarea actualizada exitosamente' });
@@ -74,4 +99,5 @@ listEditRouter.put('/actualizar/:indicador', putVacio, (req, res) => {
         res.status(404).json({ error: 'Tarea no encontrada' });
     }
 });
+
 module.exports = listEditRouter;

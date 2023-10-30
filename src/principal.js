@@ -12,8 +12,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-const listViewRouter = require('./src/routes/list-view-router');
-const listEditRouter = require('./src/routes/list-edit-router');
+const listViewRouter = require('./routes/list-view-router');
+const listEditRouter = require('./routes/list-edit-router');
 
 app.use(express.json());
 app.use('/list-view', listViewRouter);
@@ -76,12 +76,13 @@ function metodos(req,res,next) {
 
 
 
-const Tareas = [
+const tareas = [
     { indicador: 2, descripcion: "blablabla", completada: false },
     { indicador: 3, descripcion: "wgweew", completada: true },
+    {indicador: 4, descripcion: "organizar la casa", completada: true}
 ];
 
-module.exports = {Tareas};
+module.exports = {tareas};
 
 
 
