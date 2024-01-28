@@ -34,6 +34,7 @@ function eliminarTarea(indicador) {
     const findTarea = listaDeTrareas.findIndex(tarea => tarea.indicador === indicador);
     if (findTarea !== -1) {
         listaDeTrareas.splice(findTarea, 1);
+        //aca si la tarea esa diferente a -1 la borra ya que la logica dice que si es diferente a -1 quiere decir que si se encontro la tarea
        resolve(console.log('Tarea eliminada ' + indicador));
     } else {
         reject(console.log('No se encontro la tarea con indicador: ' + indicador));
