@@ -83,13 +83,14 @@ async function menu() {
             const opcion = await readline.question('Elije una opcion: ');
             //utilice un switch para la serie de opciones que puse y por cada opcion ocurre algo diferente 
             switch (opcion) {
+                //cada opcion tiene una promesa para que el programa funcione mejor 
                 case '1':
                     try{
                     const indicador = await readline.question('Indicador de la nueva tarea: ');
                     const descripcion = await readline.question('Descripcion de la nueva tarea: ');
                         await agregarTarea(indicador, descripcion);
                     }catch(error) {
-                     console.log('error ' +error);   
+                     console.log('error ' + error);   
                     }
                     break;
                 case '2':
@@ -97,7 +98,7 @@ async function menu() {
                         const indicadorAElinimar = await readline.question('Indicador de la tarea que se desea eliminar: ');
                         await eliminarTarea(indicadorAElinimar);
                     } catch (error) {
-                        console.log('error '+error);
+                        console.log('error '+ error);
                     }
                     break;
                 case '3':
@@ -105,7 +106,7 @@ async function menu() {
                         const tareaCompletar = await readline.question('Indicador de la tarea que se desea completar: ');
                         await tareaCompletada(tareaCompletar);
                     } catch (error) {
-                        console.log('error '+error);
+                        console.log('error '+ error);
                     }
                     break;
                 case '4':
